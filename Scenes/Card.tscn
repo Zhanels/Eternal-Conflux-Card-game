@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b6dk7o4olypym"]
 
-[ext_resource type="Texture2D" uid="uid://sijlnu86dcv4" path="res://KnightCard.png" id="1_dd2wi"]
-[ext_resource type="Script" uid="uid://qmqkpedmdxjq" path="res://Card.gd" id="1_hael8"]
+[ext_resource type="Texture2D" uid="uid://sijlnu86dcv4" path="res://Assets/KnightCard.png" id="1_dd2wi"]
+[ext_resource type="Script" uid="uid://qmqkpedmdxjq" path="res://Scripts/Card.gd" id="1_hael8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_glv2v"]
 size = Vector2(180, 263)

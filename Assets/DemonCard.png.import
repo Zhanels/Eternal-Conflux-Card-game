@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bd2oymnlduvfe"
-path="res://.godot/imported/Deck.png-916973d1a1112b1458eeef35c36e4601.ctex"
+uid="uid://dptexk3fya3mu"
+path="res://.godot/imported/DemonCard.png-1f9060c3942ab87820a2b8fd3686c81a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Deck.png"
-dest_files=["res://.godot/imported/Deck.png-916973d1a1112b1458eeef35c36e4601.ctex"]
+source_file="res://Assets/DemonCard.png"
+dest_files=["res://.godot/imported/DemonCard.png-1f9060c3942ab87820a2b8fd3686c81a.ctex"]
 
 [params]
 

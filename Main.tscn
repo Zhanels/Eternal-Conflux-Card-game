@@ -1,16 +1,49 @@
-[gd_scene load_steps=4 format=3 uid="uid://7ae56nww7sat"]
+[gd_scene load_steps=8 format=3 uid="uid://7ae56nww7sat"]
 
-[ext_resource type="Script" uid="uid://beubvhe0r1nea" path="res://CardManager.gd" id="1_uu6xs"]
-[ext_resource type="Script" uid="uid://b5qrrk4fd0j32" path="res://PlayerHand.gd" id="3_cm0pq"]
+[ext_resource type="Script" uid="uid://beubvhe0r1nea" path="res://Scripts/CardManager.gd" id="1_uu6xs"]
+[ext_resource type="Script" uid="uid://b5qrrk4fd0j32" path="res://Scripts/PlayerHand.gd" id="3_cm0pq"]
 [ext_resource type="PackedScene" uid="uid://dtiusdvr0hf41" path="res://Scenes/CardSlot.tscn" id="3_r0du0"]
+[ext_resource type="Texture2D" uid="uid://bd2oymnlduvfe" path="res://Assets/Deck.png" id="4_cm0pq"]
+[ext_resource type="Script" uid="uid://dt0jic6e78brl" path="res://Deck.gd" id="4_fos0i"]
+[ext_resource type="Script" uid="uid://ctkk8nynuxp72" path="res://InPutManager.gd" id="6_3dxm6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
+size = Vector2(179, 265)
 
 [node name="Main" type="Node2D"]
 
 [node name="CardManager" type="Node2D" parent="."]
 script = ExtResource("1_uu6xs")
 
-[node name="CardSlot" parent="." instance=ExtResource("3_r0du0")]
-position = Vector2(297, 443)
+[node name="CardSlot" parent="CardManager" instance=ExtResource("3_r0du0")]
+position = Vector2(342, 237)
 
-[node name="PlayetHand" type="Node2D" parent="."]
+[node name="CardSlot3" parent="CardManager" instance=ExtResource("3_r0du0")]
+position = Vector2(1239, 240)
+
+[node name="CardSlot4" parent="CardManager" instance=ExtResource("3_r0du0")]
+position = Vector2(934, 245)
+
+[node name="CardSlot2" parent="CardManager" instance=ExtResource("3_r0du0")]
+position = Vector2(625, 240)
+
+[node name="PlayerHand" type="Node2D" parent="."]
 script = ExtResource("3_cm0pq")
+
+[node name="Deck" type="Node2D" parent="."]
+position = Vector2(150, 955)
+script = ExtResource("4_fos0i")
+
+[node name="Sprite2D" type="Sprite2D" parent="Deck"]
+texture = ExtResource("4_cm0pq")
+
+[node name="Area2D" type="Area2D" parent="Deck"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Deck/Area2D"]
+position = Vector2(-0.5, 0.5)
+shape = SubResource("RectangleShape2D_r0du0")
+
+[node name="InPutManager" type="Node2D" parent="."]
+script = ExtResource("6_3dxm6")
