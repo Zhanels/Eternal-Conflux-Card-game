@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dt80dxq7yma1a"
-path="res://.godot/imported/TornadoCard.png-dbf3e5d31c686f808471357e1ca00093.ctex"
+path="res://.godot/imported/Tornado.png-e04a053c3d90ae03f10bc115e2c14199.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/TornadoCard.png"
-dest_files=["res://.godot/imported/TornadoCard.png-dbf3e5d31c686f808471357e1ca00093.ctex"]
+source_file="res://Assets/Tornado.png"
+dest_files=["res://.godot/imported/Tornado.png-e04a053c3d90ae03f10bc115e2c14199.ctex"]
 
 [params]
 
