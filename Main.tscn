@@ -1,11 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://7ae56nww7sat"]
+[gd_scene load_steps=13 format=3 uid="uid://7ae56nww7sat"]
 
 [ext_resource type="Script" uid="uid://beubvhe0r1nea" path="res://Scripts/CardManager.gd" id="1_uu6xs"]
 [ext_resource type="Script" uid="uid://b5qrrk4fd0j32" path="res://Scripts/PlayerHand.gd" id="3_cm0pq"]
 [ext_resource type="PackedScene" uid="uid://dtiusdvr0hf41" path="res://Scenes/CardSlot.tscn" id="3_r0du0"]
 [ext_resource type="Texture2D" uid="uid://bd2oymnlduvfe" path="res://Assets/Deck.png" id="4_cm0pq"]
-[ext_resource type="Script" uid="uid://dt0jic6e78brl" path="res://Deck.gd" id="4_fos0i"]
-[ext_resource type="Script" uid="uid://ctkk8nynuxp72" path="res://InPutManager.gd" id="6_3dxm6"]
+[ext_resource type="Script" uid="uid://dt0jic6e78brl" path="res://Scripts/Deck.gd" id="4_fos0i"]
+[ext_resource type="Script" uid="uid://da1mrviciawtv" path="res://Scripts/OpponentDeck.gd" id="5_wkp8b"]
+[ext_resource type="Script" uid="uid://ctkk8nynuxp72" path="res://Scripts/InPutManager.gd" id="6_3dxm6"]
+[ext_resource type="PackedScene" uid="uid://8cwe316notje" path="res://Scenes/OpponentCardSlot.tscn" id="7_lgr22"]
+[ext_resource type="Script" uid="uid://bevie8wdxuu4d" path="res://Scripts/BattleManager.gd" id="8_03owx"]
+[ext_resource type="Script" uid="uid://biaiv0e6xlh4x" path="res://Scripts/OpponentHand.gd" id="9_wkp8b"]
+[ext_resource type="Texture2D" uid="uid://w1tjiqd7w3b5" path="res://Assets/CardSlot.png" id="11_20pc6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
 size = Vector2(179, 265)
@@ -36,7 +41,6 @@ shape = SubResource("RectangleShape2D_r0du0")
 
 [node name="CardsLeft" type="RichTextLabel" parent="Deck"]
 modulate = Color(0, 0, 0, 1)
-z_index = -2
 offset_left = -10.0
 offset_top = -20.0
 offset_right = 30.0
@@ -46,13 +50,13 @@ text = "0"
 
 [node name="OpponentDeck" type="Node2D" parent="."]
 position = Vector2(1780, 150)
+script = ExtResource("5_wkp8b")
 
 [node name="Sprite2D" type="Sprite2D" parent="OpponentDeck"]
 texture = ExtResource("4_cm0pq")
 
 [node name="CardsLeft" type="RichTextLabel" parent="OpponentDeck"]
 modulate = Color(0, 0, 0, 1)
-z_index = -2
 offset_left = -10.0
 offset_top = -20.0
 offset_right = 30.0
@@ -67,35 +71,43 @@ script = ExtResource("6_3dxm6")
 [node name="CardSlots" type="Node2D" parent="."]
 
 [node name="CardSlot" parent="CardSlots" instance=ExtResource("3_r0du0")]
+z_index = -3
 position = Vector2(820, 647)
 scale = Vector2(0.6, 0.6)
 
 [node name="CardSlot3" parent="CardSlots" instance=ExtResource("3_r0du0")]
+z_index = -3
 position = Vector2(1240, 650)
 scale = Vector2(0.6, 0.6)
 
 [node name="CardSlot4" parent="CardSlots" instance=ExtResource("3_r0du0")]
+z_index = -3
 position = Vector2(960, 650)
 scale = Vector2(0.6, 0.6)
 
 [node name="CardSlot2" parent="CardSlots" instance=ExtResource("3_r0du0")]
+z_index = -3
 position = Vector2(1100, 650)
 scale = Vector2(0.6, 0.6)
 
-[node name="CardSlot5" parent="CardSlots" instance=ExtResource("3_r0du0")]
-position = Vector2(820, 470)
+[node name="OpponentCardslot1" parent="CardSlots" instance=ExtResource("7_lgr22")]
+z_index = -3
+position = Vector2(824, 457)
 scale = Vector2(0.6, 0.6)
 
-[node name="CardSlot6" parent="CardSlots" instance=ExtResource("3_r0du0")]
-position = Vector2(1240, 470)
+[node name="OpponentCardslot2" parent="CardSlots" instance=ExtResource("7_lgr22")]
+z_index = -3
+position = Vector2(1102, 449)
 scale = Vector2(0.6, 0.6)
 
-[node name="CardSlot7" parent="CardSlots" instance=ExtResource("3_r0du0")]
-position = Vector2(960, 470)
+[node name="OpponentCardslot3" parent="CardSlots" instance=ExtResource("7_lgr22")]
+z_index = -3
+position = Vector2(960, 452)
 scale = Vector2(0.6, 0.6)
 
-[node name="CardSlot8" parent="CardSlots" instance=ExtResource("3_r0du0")]
-position = Vector2(1100, 470)
+[node name="OpponentCardslot4" parent="CardSlots" instance=ExtResource("7_lgr22")]
+z_index = -3
+position = Vector2(1243, 449)
 scale = Vector2(0.6, 0.6)
 
 [node name="EndTurnButton" type="Button" parent="."]
@@ -104,3 +116,43 @@ offset_top = 469.0
 offset_right = 151.0
 offset_bottom = 500.0
 text = "End Turn"
+
+[node name="BattleManager" type="Node" parent="."]
+script = ExtResource("8_03owx")
+
+[node name="BattleTimer" type="Timer" parent="."]
+
+[node name="OpponentHand" type="Node2D" parent="."]
+script = ExtResource("9_wkp8b")
+
+[node name="PlayerHealth" type="RichTextLabel" parent="."]
+offset_left = 62.0
+offset_top = 571.0
+offset_right = 102.0
+offset_bottom = 611.0
+scale = Vector2(2, 2)
+text = "0"
+
+[node name="OpponentHealth" type="RichTextLabel" parent="."]
+offset_left = 62.0
+offset_top = 303.0
+offset_right = 102.0
+offset_bottom = 343.0
+scale = Vector2(2, 2)
+text = "0"
+
+[node name="PlayerDiscard" type="Node2D" parent="."]
+position = Vector2(1628, 898)
+scale = Vector2(0.6, 0.6)
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerDiscard"]
+texture = ExtResource("11_20pc6")
+
+[node name="OpponentDiscard" type="Node2D" parent="."]
+position = Vector2(166, 152)
+scale = Vector2(0.6, 0.6)
+
+[node name="Sprite2D" type="Sprite2D" parent="OpponentDiscard"]
+texture = ExtResource("11_20pc6")
+
+[connection signal="pressed" from="EndTurnButton" to="BattleManager" method="_on_end_turn_button_pressed"]
