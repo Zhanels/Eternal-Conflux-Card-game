@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c8fcbwr04wco"]
+[gd_scene load_steps=8 format=3 uid="uid://c8fcbwr04wco"]
 
 [ext_resource type="Script" uid="uid://c8fms6hij22ey" path="res://Scripts/OpponentCard.gd" id="1_qrb68"]
 [ext_resource type="Texture2D" uid="uid://bd2oymnlduvfe" path="res://Assets/Deck.png" id="2_r8ami"]
@@ -160,6 +160,9 @@ _data = {
 &"RESET": SubResource("Animation_kphy1")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qrb68"]
+size = Vector2(181, 264)
+
 [node name="Card" type="Node2D"]
 position = Vector2(1750, 150)
 script = ExtResource("1_qrb68")
@@ -194,3 +197,11 @@ text = "0"
 libraries = {
 &"": SubResource("AnimationLibrary_wejov")
 }
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_qrb68")

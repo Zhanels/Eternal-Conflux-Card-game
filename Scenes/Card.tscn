@@ -204,5 +204,18 @@ libraries = {
 &"": SubResource("AnimationLibrary_wejov")
 }
 
+[node name="Ability" type="RichTextLabel" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = -73.0
+offset_top = 69.0
+offset_right = 85.0
+offset_bottom = 124.0
+scale = Vector2(0.9, 0.9)
+tooltip_text = "hello"
+text = "Default text"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

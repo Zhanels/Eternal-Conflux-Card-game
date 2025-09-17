@@ -7,7 +7,7 @@ const CARD_DRAW_SPEED = 0.2
 const STARTING_HAND_SIZE = 5
 
 # Array met alle kaarten in het deck (duplicaten mogelijk)
-var player_deck = ["Knight", "Archer", "Demon","Knight", "Archer", "Demon", "Demon", "Demon", "Demon", "Demon", "Demon"]
+var player_deck = ["Knight", "Archer", "Demon","Knight","Tornado"]
 # Referentie naar de kaart database voor stats
 var card_database_reference
 # Boolean om te voorkomen dat meerdere kaarten per beurt getrokken worden
@@ -56,12 +56,18 @@ func draw_card():
 	var card_image_path = str("res://Assets/" + card_drawn_name + "Card.png")
 	new_card.get_node("CardImage").texture = load(card_image_path)
 	
-	# Zet attack en health waarden uit database
-	new_card.health = card_database_reference.CARDS[card_drawn_name]["health"]
-	new_card.attack = card_database_reference.CARDS[card_drawn_name]["attack"]
-	new_card.get_node("Attack").text = str(new_card.attack)
-	new_card.get_node("Health").text = str(new_card.health)
 	new_card.card_type = card_database_reference.CARDS[card_drawn_name]["type"]
+	if new_card.card_type == "Monster":
+		new_card.get_node("Ability").visible = false
+	# Set attack and health values from database
+		new_card.health = card_database_reference.CARDS[card_drawn_name]["health"]
+		new_card.attack = card_database_reference.CARDS[card_drawn_name]["attack"]
+		new_card.get_node("Attack").text = str(new_card.attack)
+		new_card.get_node("Health").text = str(new_card.health)
+	else:
+		new_card.get_node("Attack").visible = false
+		new_card.get_node("Health").visible = false
+		new_card.get_node("Ability").text = card_database_reference.CARDS[card_drawn_name]["Ability"]
 	# Voeg kaart toe aan scene via CardManager
 	$"../CardManager".add_child(new_card)
 	new_card.name = "Card"

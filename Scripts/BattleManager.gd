@@ -229,13 +229,31 @@ func destroy_card(card, card_owner):
 
 
 func enemy_card_selected(defending_card):
+	print("=== ENEMY CARD SELECTED DEBUG ===")
 	var attacking_card = $"../CardManager".selected_monster
+	print("Attacking card: ", attacking_card)
+	print("Defending card: ", defending_card)
+	print("Is opponents turn: ", is_opponents_turn)
+	print("Defending card in battlefield: ", defending_card in opponent_cards_on_battlefield)
+	
 	if attacking_card:
 		if defending_card in opponent_cards_on_battlefield:
-			$"../CardManager".selected_monster = null
-			attack(attacking_card, defending_card, "Player")
-
-
+			if not is_opponents_turn:
+				print("All conditions met - starting attack!")
+				$"../CardManager".selected_monster = null
+				attack(attacking_card, defending_card, "Player")
+			else:
+				print("It's opponent's turn - can't attack")
+		else:
+			print("Defending card not in battlefield")
+	else:
+		print("No attacking card selected")
+#func enemy_card_selected(defending_card):
+	#var attacking_card = $"../CardManager".selected_monster
+	#if attacking_card and not is_opponents_turn:
+		#if defending_card in opponent_cards_on_battlefield:
+			#$"../CardManager".selected_monster = null
+			#attack(attacking_card, defending_card, "Player")
 
 func try_play_card_with_highest_attack():
 	# Check if opponent has cards in hand FIRST

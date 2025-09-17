@@ -6,22 +6,32 @@ const CARDS = {
 	# Ridder - Sterke verdediging, gemiddelde aanval
 	"Knight": {
 		"attack": 3,   # Aanvalskracht van de kaart
-		"health": 5,   # Levenspunten van de kaart
-		"type":"monster"
+		"health": 3,   # Levenspunten van de kaart
+		"type":"Monster",
+		"Ability": null
+		
 	},
 	
 	# Boogschutter - Snelle aanval, lage verdediging  
 	"Archer": {
 		"attack": 2,   # Lage aanvalskracht
-		"health": 3,    # Weinig levenspunten
-		"type":"monster"
+		"health": 1,    # Weinig levenspunten
+		"type":"Monster",
+		"Ability": null
 	},
 	
 	# Demon - Hoge aanval, gemiddelde verdediging
 	"Demon": {
 		"attack": 4,   # Hoogste aanvalskracht
 		"health": 4,   # Redelijke levenspunten
-		"type":"monster"
+		"type":"Monster",
+		"Ability": null
+	},
+	"Tornado": {
+		"attack": null,   # Hoogste aanvalskracht
+		"health": null,   # Redelijke levenspunten
+		"type":"Magic",
+		"Ability": "Deal 1 magic damage to ALL ENEMY'S"
 	}
 	}
 	

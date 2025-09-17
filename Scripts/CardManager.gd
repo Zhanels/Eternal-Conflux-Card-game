@@ -29,7 +29,31 @@ func _process(delta: float) -> void:
 			clamp(mouse_pos.y, 0, screen_size.y))
 
 
+#func card_clicked(card):
+	## Check if it's an opponent card being clicked
+	#if card in $"../BattleManager".opponent_cards_on_battlefield:
+		#if selected_monster && $"../BattleManager".player_is_attacking == false:
+			#$"../BattleManager".enemy_card_selected(card)
+		#return
+		
 func card_clicked(card):
+	# Check if it's an opponent card being clicked
+	print("=== CARD CLICKED DEBUG ===")
+	print("Card clicked: ", card.name)
+	print("Is opponent card: ", card in $"../BattleManager".opponent_cards_on_battlefield)
+	print("Selected monster: ", selected_monster)
+	print("Player is attacking: ", $"../BattleManager".player_is_attacking)
+	print("Is opponents turn: ", $"../BattleManager".is_opponents_turn)
+# Check if it's an opponent card being clicked
+	if card in $"../BattleManager".opponent_cards_on_battlefield:
+		print("Opponent card clicked - checking conditions...")
+		if selected_monster:
+			print("Have selected monster, calling enemy_card_selected")
+			$"../BattleManager".enemy_card_selected(card)
+		else:
+			print("No selected monster")
+		return
+	
 	# Check if card on battlefield or in hand
 	if card.card_slot_card_is_in:
 		if $"../BattleManager".is_opponents_turn == false:
@@ -73,7 +97,7 @@ func finish_drag():
 	var card_slot_found = raycast_check_for_card_slot()
 	if card_slot_found and not card_slot_found.card_in_slot:
 		# Card dropped in empty slot
-		if card_being_dragged.card_type == card_slot_found.card_slot_type:
+		#if card_being_dragged.card_type == card_slot_found.card_slot_type:
 			# Card dropped in correct type of slot
 			if !played_monster_card_this_turn:
 				#Card placed in slot
@@ -85,7 +109,7 @@ func finish_drag():
 				player_hand_reference.remove_card_from_hand(card_being_dragged)
 				card_being_dragged.position = card_slot_found.position
 				card_slot_found.card_in_slot = true
-				#card_slot_found.get_node("Area2D/CollisionShape2D").disabled = true
+				card_slot_found.get_node("Area2D/CollisionShape2D").disabled = true
 				$"../BattleManager".player_cards_on_battlefield.append(card_being_dragged)
 				card_being_dragged = null
 				return

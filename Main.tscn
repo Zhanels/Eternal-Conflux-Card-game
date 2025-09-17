@@ -89,7 +89,7 @@ scale = Vector2(0.6, 0.6)
 
 [node name="OpponentCardslot1" parent="CardSlots" instance=ExtResource("7_lgr22")]
 z_index = -3
-position = Vector2(824, 457)
+position = Vector2(828, 451)
 scale = Vector2(0.6, 0.6)
 
 [node name="OpponentCardslot2" parent="CardSlots" instance=ExtResource("7_lgr22")]
