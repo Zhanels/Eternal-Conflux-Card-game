@@ -7,7 +7,7 @@ const CARD_DRAW_SPEED = 0.2
 const STARTING_HAND_SIZE = 5
 
 # Array met alle kaarten in het deck (duplicaten mogelijk)
-var player_deck =  ["Knight", "Archer", "Demon", "Knight", "Tornado", "Archer", "Knight", "Demon", "Archer", "Knight"]
+var player_deck =  ["Knight", "Archer", "Demon", "Knight", "Tornado"]
 # Referentie naar de kaart database voor stats
 var card_database_reference
 # Boolean om te voorkomen dat meerdere kaarten per beurt getrokken worden
@@ -57,6 +57,15 @@ func draw_card():
 	new_card.get_node("CardImage").texture = load(card_image_path)
 	
 	new_card.card_type = card_database_reference.CARDS[card_drawn_name]["type"]
+	if new_card.card_type == "Magic":
+	# Load ability script as a separate object, don't replace the card's script
+		var script_path = card_database_reference.CARDS[card_drawn_name]["script_path"]
+		if script_path:
+			var ability_script_class = load(script_path)
+			new_card.ability_script = ability_script_class.new()
+		# Pass reference to battle manager or other needed objects
+			new_card.ability_script.battle_manager = get_parent().get_node("BattleManager")
+		
 	if new_card.card_type == "Monster":
 		new_card.get_node("Ability").visible = false
 	# Set attack and health values from database

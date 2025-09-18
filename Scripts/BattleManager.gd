@@ -302,3 +302,12 @@ func end_opponent_turn():
 	is_opponents_turn = false
 	$"../EndTurnButton".disabled = false
 	$"../EndTurnButton".visible = true
+	
+func enable_turn_button(is_enabled):
+		if is_enabled:
+			$"../EndTurnButton".disabled = false
+			$"../EndTurnButton".visible = true
+		else:
+			$"../EndTurnButton".disabled = true
+			$"../EndTurnButton".visible = false
+			

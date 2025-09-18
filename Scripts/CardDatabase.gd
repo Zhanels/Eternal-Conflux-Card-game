@@ -8,7 +8,8 @@ const CARDS = {
 		"attack": 3,   # Aanvalskracht van de kaart
 		"health": 3,   # Levenspunten van de kaart
 		"type":"Monster",
-		"Ability": null
+		"Ability": null,
+		"script_path": null
 		
 	},
 	
@@ -17,7 +18,8 @@ const CARDS = {
 		"attack": 2,   # Lage aanvalskracht
 		"health": 1,    # Weinig levenspunten
 		"type":"Monster",
-		"Ability": null
+		"Ability": null,
+		"script_path": null
 	},
 	
 	# Demon - Hoge aanval, gemiddelde verdediging
@@ -25,14 +27,16 @@ const CARDS = {
 		"attack": 4,   # Hoogste aanvalskracht
 		"health": 4,   # Redelijke levenspunten
 		"type":"Monster",
-		"Ability": null
+		"Ability": null,
+		"script_path": null
 	},
 	"Tornado": {
-		"attack": null,   # Hoogste aanvalskracht
-		"health": null,   # Redelijke levenspunten
-		"type":"Magic",
-		"Ability": "Deal 1 magic damage to ALL ENEMY'S"
-	}
+	"attack": null,
+	"health": null,
+	"type": "Magic",
+	"Ability": "Deal 1 magic damage to ALL ENEMY'S",
+	"script_path": "res://Scripts/Ability/Tornado.gd"
+}
 	}
 	
 	# Hier kunnen nieuwe kaarten toegevoegd worden:

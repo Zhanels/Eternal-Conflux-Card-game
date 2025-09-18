@@ -38,17 +38,8 @@ func _process(delta: float) -> void:
 		
 func card_clicked(card):
 	# Check if it's an opponent card being clicked
-	print("=== CARD CLICKED DEBUG ===")
-	print("Card clicked: ", card.name)
-	print("Is opponent card: ", card in $"../BattleManager".opponent_cards_on_battlefield)
-	print("Selected monster: ", selected_monster)
-	print("Player is attacking: ", $"../BattleManager".player_is_attacking)
-	print("Is opponents turn: ", $"../BattleManager".is_opponents_turn)
-# Check if it's an opponent card being clicked
 	if card in $"../BattleManager".opponent_cards_on_battlefield:
-		print("Opponent card clicked - checking conditions...")
 		if selected_monster:
-			print("Have selected monster, calling enemy_card_selected")
 			$"../BattleManager".enemy_card_selected(card)
 		else:
 			print("No selected monster")
@@ -56,19 +47,27 @@ func card_clicked(card):
 	
 	# Check if card on battlefield or in hand
 	if card.card_slot_card_is_in:
-		if $"../BattleManager".is_opponents_turn == false:
-			if $"../BattleManager".player_is_attacking == false:
-				# Card on battlefield
-				if card not in $"../BattleManager".player_cards_that_attacked_this_turn:
-					if $"../BattleManager".opponent_cards_on_battlefield.size() == 0:
-						$"../BattleManager".direct_attack(card, "Player")
-						return
-					else:
-						select_card_for_battle(card)
+		# Don't allow actions during opponent's turn or while attacking
+		if $"../BattleManager".is_opponents_turn:
+			return
+		if $"../BattleManager".player_is_attacking:
+			return
+		
+		# Card on battlefield - check if it can attack
+		if card in $"../BattleManager".player_cards_that_attacked_this_turn:
+			return
+		
+		# Only Monster cards can attack
+		if card.card_type != "Monster":
+			return
+		
+		if $"../BattleManager".opponent_cards_on_battlefield.size() == 0:
+			$"../BattleManager".direct_attack(card, "Player")
+		else:
+			select_card_for_battle(card)
 	else:
 		# Card in hand
 		start_drag(card)
-
 
 func select_card_for_battle(card):
 	# Check if monster already selected
@@ -97,22 +96,36 @@ func finish_drag():
 	var card_slot_found = raycast_check_for_card_slot()
 	if card_slot_found and not card_slot_found.card_in_slot:
 		# Card dropped in empty slot
-		#if card_being_dragged.card_type == card_slot_found.card_slot_type:
-			# Card dropped in correct type of slot
-			if !played_monster_card_this_turn:
-				#Card placed in slot
-				played_monster_card_this_turn = true
-				card_being_dragged.scale = Vector2(CARD_SMALLER_SCALE, CARD_SMALLER_SCALE)
-				card_being_dragged.z_index = -1
-				is_hovering_on_card = false
-				card_being_dragged.card_slot_card_is_in = card_slot_found
-				player_hand_reference.remove_card_from_hand(card_being_dragged)
-				card_being_dragged.position = card_slot_found.position
-				card_slot_found.card_in_slot = true
-				card_slot_found.get_node("Area2D/CollisionShape2D").disabled = true
-				$"../BattleManager".player_cards_on_battlefield.append(card_being_dragged)
-				card_being_dragged = null
-				return
+		
+		# Check if already played a card this turn (any type)
+		if played_monster_card_this_turn:
+			player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
+			card_being_dragged = null
+			return
+		
+		# Place card in slot
+		played_monster_card_this_turn = true
+		card_being_dragged.scale = Vector2(CARD_SMALLER_SCALE, CARD_SMALLER_SCALE)
+		card_being_dragged.z_index = -1
+		is_hovering_on_card = false
+		card_being_dragged.card_slot_card_is_in = card_slot_found
+		player_hand_reference.remove_card_from_hand(card_being_dragged)
+		card_being_dragged.position = card_slot_found.position
+		card_slot_found.card_in_slot = true
+		card_slot_found.get_node("Area2D/CollisionShape2D").disabled = true
+		
+		# Add to battlefield only if Monster
+		if card_being_dragged.card_type == "Monster":
+			$"../BattleManager".player_cards_on_battlefield.append(card_being_dragged)
+		else:
+			if card_being_dragged.ability_script:
+				card_being_dragged.ability_script.trigger_ability($"../BattleManager", card_being_dragged,$"../InPutManager")
+			else:
+					print("Magic card played but no ability script found")
+		
+		card_being_dragged = null
+		return
+			
 	player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
 	card_being_dragged = null
 

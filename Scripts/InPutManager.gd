@@ -7,6 +7,7 @@ signal left_mouse_button_released    # Wordt uitgezonden bij mouse release
 # Referenties naar andere managers voor directe communicatie
 var card_manager_reference           # Referentie naar CardManager node
 var deck_reference                   # Referentie naar Deck node
+var inputs_disabled = false	
 
 func _ready() -> void:
 	# Initialiseer referenties naar sibling nodes
@@ -32,6 +33,8 @@ func _input(event):
 
 # Raycast functie om te detecteren wat er geklikt werd
 func raycast_at_cursor():
+	if inputs_disabled:
+		return
 	# Setup voor physics raycast
 	var space_state = get_world_2d().direct_space_state
 	var parameters = PhysicsPointQueryParameters2D.new()
