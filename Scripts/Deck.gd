@@ -7,7 +7,7 @@ const CARD_DRAW_SPEED = 0.2
 const STARTING_HAND_SIZE = 5
 
 # Array met alle kaarten in het deck (duplicaten mogelijk)
-var player_deck = ["Knight", "Archer", "Demon","Knight","Tornado"]
+var player_deck =  ["Knight", "Archer", "Demon", "Knight", "Tornado", "Archer", "Knight", "Demon", "Archer", "Knight"]
 # Referentie naar de kaart database voor stats
 var card_database_reference
 # Boolean om te voorkomen dat meerdere kaarten per beurt getrokken worden
