@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dls1iecomqt6e"
-path="res://.godot/imported/TornadoCard.png-dbf3e5d31c686f808471357e1ca00093.ctex"
+uid="uid://bd2oymnlduvfe"
+path="res://.godot/imported/Deck1.png-c76a243e103be85591eedc67ac6df281.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/TornadoCard.png"
-dest_files=["res://.godot/imported/TornadoCard.png-dbf3e5d31c686f808471357e1ca00093.ctex"]
+source_file="res://Assets/Deck1.png"
+dest_files=["res://.godot/imported/Deck1.png-c76a243e103be85591eedc67ac6df281.ctex"]
 
 [params]
 

@@ -56,16 +56,24 @@ func draw_card():
 	new_card.get_node("CardImage").texture = load(card_image_path)
 	
 	# Zet attack en health waarden uit database
+	
 	new_card.health = card_database_reference.CARDS[card_drawn_name]["health"]
 	new_card.attack = card_database_reference.CARDS[card_drawn_name]["attack"]
 	new_card.get_node("Attack").text = str(new_card.attack)
 	new_card.get_node("Health").text = str(new_card.health)
+
 	new_card.card_type = card_database_reference.CARDS[card_drawn_name]["type"]
 	# Voeg kaart toe aan scene via CardManager
 	$"../CardManager".add_child(new_card)
 	new_card.name = "Card"
 	
 	# Voeg kaart toe aan speler's hand met animatie
+	# Add this line at the end of draw_card() function in OpponentDeck.gd
 	$"../OpponentHand".add_card_to_hand(new_card, CARD_DRAW_SPEED)
+
+# Add the flip animation and text color after adding to hand
+	#new_card.get_node("AnimationPlayer").play("Card_Flip")
+	#new_card.get_node("Attack").modulate = Color.WHITE
+	#new_card.get_node("Health").modulate = Color.WHITE
 	
 	

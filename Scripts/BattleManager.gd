@@ -21,6 +21,7 @@ func _ready() -> void:
 	battle_timer.one_shot = true
 	battle_timer.wait_time = 1.0
 	
+	
 	var slot1 = $"../CardSlots/OpponentCardslot1"
 	var slot2 = $"../CardSlots/OpponentCardslot2"
 	var slot3 = $"../CardSlots/OpponentCardslot3"
@@ -287,6 +288,8 @@ func try_play_card_with_highest_attack():
 
 	# Wait 1 second
 	await wait(1.0)
+
+
 
 
 func wait(wait_time):

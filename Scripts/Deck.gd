@@ -27,6 +27,8 @@ func _ready() -> void:
 
 # Functie om een kaart te trekken uit het deck
 func draw_card():
+	
+	
 	# Check of er al een kaart getrokken is deze beurt
 	if drawn_card_this_turn:
 		return  # Stop hier als al getrokken
@@ -86,6 +88,12 @@ func draw_card():
 	
 	# Speel kaart flip animatie af
 	new_card.get_node("AnimationPlayer").play("Card_Flip")
+	print("=== Z_INDEX DEBUG ===")
+	print("Card z_index: ", new_card.z_index)
+	print("CardImage z_index: ", new_card.get_node("CardImage").z_index)
+	print("Health z_index: ", new_card.get_node("Health").z_index)
+	print("Attack z_index: ", new_card.get_node("Attack").z_index)
+	print("Ability z_index: ", new_card.get_node("Ability").z_index)
 	
 func reset_draw():
 	drawn_card_this_turn = false

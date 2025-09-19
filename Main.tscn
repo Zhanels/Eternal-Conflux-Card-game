@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://beubvhe0r1nea" path="res://Scripts/CardManager.gd" id="1_uu6xs"]
 [ext_resource type="Script" uid="uid://b5qrrk4fd0j32" path="res://Scripts/PlayerHand.gd" id="3_cm0pq"]
 [ext_resource type="PackedScene" uid="uid://dtiusdvr0hf41" path="res://Scenes/CardSlot.tscn" id="3_r0du0"]
-[ext_resource type="Texture2D" uid="uid://bd2oymnlduvfe" path="res://Assets/Deck.png" id="4_cm0pq"]
+[ext_resource type="Texture2D" uid="uid://sos7gduwbm38" path="res://Assets/Deck.png" id="4_cm0pq"]
 [ext_resource type="Script" uid="uid://dt0jic6e78brl" path="res://Scripts/Deck.gd" id="4_fos0i"]
 [ext_resource type="Script" uid="uid://da1mrviciawtv" path="res://Scripts/OpponentDeck.gd" id="5_wkp8b"]
 [ext_resource type="Script" uid="uid://ctkk8nynuxp72" path="res://Scripts/InPutManager.gd" id="6_3dxm6"]
@@ -37,7 +37,7 @@ position = Vector2(-0.5, 0.5)
 shape = SubResource("RectangleShape2D_r0du0")
 
 [node name="CardsLeft" type="RichTextLabel" parent="Deck"]
-modulate = Color(0, 0, 0, 1)
+modulate = Color(0, 1, 0, 1)
 offset_left = -10.0
 offset_top = -20.0
 offset_right = 30.0
@@ -53,7 +53,7 @@ script = ExtResource("5_wkp8b")
 texture = ExtResource("4_cm0pq")
 
 [node name="CardsLeft" type="RichTextLabel" parent="OpponentDeck"]
-modulate = Color(0, 0, 0, 1)
+modulate = Color(0, 0.988235, 0, 1)
 offset_left = -10.0
 offset_top = -20.0
 offset_right = 30.0
@@ -117,6 +117,7 @@ text = "End Turn"
 [node name="BattleTimer" type="Timer" parent="."]
 
 [node name="OpponentHand" type="Node2D" parent="."]
+modulate = Color(0.411765, 1, 0.0392157, 1)
 script = ExtResource("9_wkp8b")
 
 [node name="PlayerHealth" type="RichTextLabel" parent="."]

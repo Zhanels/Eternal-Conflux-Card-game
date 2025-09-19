@@ -9,6 +9,7 @@ const UPDATE_CARD_POS_SPEED = 0.1   # Standaard snelheid voor positie updates
 var opponent_hand = []                       # Array met alle kaart objecten in de hand
 var card_manager                    # Referentie naar CardManager voor node operaties
 
+
 func _ready():
 	# Verkrijg referentie naar CardManager bij initialisatie
 	card_manager = get_parent().get_node("CardManager")
@@ -18,7 +19,11 @@ func add_card_to_hand(card, speed_to_move):
 	if card not in opponent_hand:
 		# Nieuwe kaart uit deck - voeg toe aan begin van hand
 		opponent_hand.insert(0, card)
+		# Set text color here after card is added
+		#card.get_node("Attack").modulate = Color.WHITE
+		#card.get_node("Health").modulate = Color.WHITE
 		update_hand_positions(speed_to_move)
+		
 	else:
 		# Kaart die terugkeert naar hand - beweeg naar opgeslagen positie
 		animate_card_to_position(card, card.starting_position, speed_to_move)

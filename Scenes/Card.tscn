@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://b6dk7o4olypym"]
 
-[ext_resource type="Texture2D" uid="uid://sijlnu86dcv4" path="res://Assets/KnightCard.png" id="1_dd2wi"]
+[ext_resource type="Texture2D" uid="uid://sijlnu86dcv4" path="res://Assets/KnightCard1.png" id="1_dd2wi"]
 [ext_resource type="Script" uid="uid://qmqkpedmdxjq" path="res://Scripts/Card.gd" id="1_hael8"]
-[ext_resource type="Texture2D" uid="uid://bd2oymnlduvfe" path="res://Assets/Deck.png" id="2_h8wm0"]
+[ext_resource type="Texture2D" uid="uid://sos7gduwbm38" path="res://Assets/Deck.png" id="2_h8wm0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_glv2v"]
 size = Vector2(180, 263)
@@ -19,7 +19,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.152461, 0.202604),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+"values": [Color(0, 0.972549, 0, 0), Color(0, 0, 0, 0), Color(0, 0.964706, 0, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -31,7 +31,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.152461, 0.202604),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 0.988235)]
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 1, 0, 0.988235)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -164,6 +164,7 @@ _data = {
 }
 
 [node name="Card" type="Node2D"]
+z_index = -1
 position = Vector2(150, 870)
 script = ExtResource("1_hael8")
 
@@ -183,19 +184,21 @@ shape = SubResource("RectangleShape2D_glv2v")
 
 [node name="Attack" type="RichTextLabel" parent="."]
 modulate = Color(0, 0, 0, 0)
-offset_left = -65.0
-offset_top = 70.0
-offset_right = -25.0
-offset_bottom = 110.0
+z_index = 1
+offset_left = -70.0
+offset_top = 26.0
+offset_right = -30.0
+offset_bottom = 66.0
 scale = Vector2(2, 2)
 text = "0"
 
 [node name="Health" type="RichTextLabel" parent="."]
 modulate = Color(0, 0, 0, 0)
-offset_left = 50.0
-offset_top = 70.0
-offset_right = 90.0
-offset_bottom = 110.0
+z_index = 1
+offset_left = 42.0
+offset_top = 26.0
+offset_right = 82.0
+offset_bottom = 66.0
 scale = Vector2(2, 2)
 text = "0"
 
@@ -205,7 +208,8 @@ libraries = {
 }
 
 [node name="Ability" type="RichTextLabel" parent="."]
-modulate = Color(0, 0, 0, 1)
+modulate = Color(0, 1, 0, 1)
+z_index = 1
 offset_left = -73.0
 offset_top = 69.0
 offset_right = 85.0

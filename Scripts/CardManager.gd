@@ -106,7 +106,12 @@ func finish_drag():
 		# Place card in slot
 		played_monster_card_this_turn = true
 		card_being_dragged.scale = Vector2(CARD_SMALLER_SCALE, CARD_SMALLER_SCALE)
-		card_being_dragged.z_index = -1
+		card_being_dragged.get_node("CardBackImage").z_index = -3
+		card_being_dragged.get_node("CardImage").z_index = -2
+# Keep text elements visible
+		card_being_dragged.get_node("Health").z_index = 1
+		card_being_dragged.get_node("Attack").z_index = 1  
+		card_being_dragged.get_node("Ability").z_index = 1
 		is_hovering_on_card = false
 		card_being_dragged.card_slot_card_is_in = card_slot_found
 		player_hand_reference.remove_card_from_hand(card_being_dragged)
