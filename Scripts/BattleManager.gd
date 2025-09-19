@@ -13,7 +13,7 @@ var player_cards_that_attacked_this_turn = []
 var player_health
 var opponent_health
 var is_opponents_turn = false
-var player_is_attacking = false
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -48,9 +48,20 @@ func _ready() -> void:
 	$"../OpponentHealth".text = str(opponent_health)
 
 
+func direct_damage(damage):
+	opponent_health = max(0, opponent_health - damage)
+	$"../OpponentHealth".text = str(opponent_health)
+	check_game_end()
+
+
+
 func _on_end_turn_button_pressed() -> void:
 	is_opponents_turn = true
 	$"../CardManager".unselect_selected_monster()
+	for card in player_cards_that_attacked_this_turn:
+		if card.ability_script:  # Check if the card has an ability script
+			card.ability_script.end_turn_reset()
+	
 	player_cards_that_attacked_this_turn = []
 	opponent_turn()
 
@@ -103,9 +114,8 @@ func direct_attack(attacking_card, attacker):
 	if attacker == "Opponent":
 		new_pos_y = 1080
 	else:
-		$"../EndTurnButton".disabled = true
-		$"../EndTurnButton".visible = false
-		player_is_attacking = true
+		enable_turn_button(false)
+		$"../InPutManager".inputs_disabled = true
 		new_pos_y = 0
 		player_cards_that_attacked_this_turn.append(attacking_card)
 	var new_pos = Vector2(attacking_card.position.x, new_pos_y)
@@ -120,11 +130,19 @@ func direct_attack(attacking_card, attacker):
 	if attacker == "Opponent":
 		player_health = max(0, player_health - attacking_card.attack)
 		$"../PlayerHealth".text = str(player_health)
+		check_game_end()
+		# Add this check - if game ended, stop executing
+		if player_health <= 0 or opponent_health <= 0:
+			return
 	else:
 		opponent_health = max(0, opponent_health - attacking_card.attack)
 		$"../OpponentHealth".text = str(opponent_health)
+		check_game_end()
+		# Add this check - if game ended, stop executing
+		if player_health <= 0 or opponent_health <= 0:
+			return
 	
-	# Animate card to position
+	# Rest of the function continues only if game hasn't ended
 	var tween2 = get_tree().create_tween()
 	tween2.tween_property(attacking_card, "position", attacking_card.card_slot_card_is_in.position, MOVE_SPEED)
 	
@@ -132,16 +150,17 @@ func direct_attack(attacking_card, attacker):
 	await wait(1.0)
 	
 	if attacker == "Player":
-		$"../EndTurnButton".disabled = false
-		$"../EndTurnButton".visible = true
-		player_is_attacking = false
+		if attacking_card.ability_script:
+			await attacking_card.ability_script.trigger_ability(self, attacking_card, $"../InPutManager","after_attack")
+		
+		enable_turn_button(true)
+		$"../InPutManager".inputs_disabled = false
 
 
 func attack(attacking_card, defending_card, attacker):
 	if attacker == "Player":
-		$"../EndTurnButton".disabled = true
-		$"../EndTurnButton".visible = false
-		player_is_attacking = true
+		enable_turn_button(true)
+		$"../InPutManager".inputs_disabled = false
 		$"../CardManager".selected_monster = null
 		player_cards_that_attacked_this_turn.append(attacking_card)
 	
@@ -179,9 +198,10 @@ func attack(attacking_card, defending_card, attacker):
 		await wait(1.0)
 	
 	if attacker == "Player":
-		$"../EndTurnButton".disabled = false
-		$"../EndTurnButton".visible = true
-		player_is_attacking = false
+		if attacking_card.ability_script:
+			await attacking_card.ability_script.trigger_ability(self, attacking_card, $"../InPutManager","after_attack")
+		enable_turn_button(true)
+		$"../InPutManager".inputs_disabled = false
 
 
 #func destroy_card(card, card_owner):
@@ -293,9 +313,10 @@ func try_play_card_with_highest_attack():
 
 
 func wait(wait_time):
-	battle_timer.wait_time = wait_time
-	battle_timer.start()
-	await battle_timer.timeout
+	if not is_inside_tree():
+		return
+	var timer = get_tree().create_timer(wait_time)
+	await timer.timeout
 
 
 
@@ -314,3 +335,70 @@ func enable_turn_button(is_enabled):
 			$"../EndTurnButton".disabled = true
 			$"../EndTurnButton".visible = false
 			
+			
+			
+func check_game_end():
+	if player_health <= 0:
+		show_defeat_screen()
+	elif opponent_health <= 0:
+		show_victory_screen()
+
+func show_victory_screen():
+	# Disable all inputs
+	#$"../InPutManager".inputs_disabled = true
+	# Load and show victory scene
+	# Wait 1 second
+	await wait(1.0)
+	get_tree().change_scene_to_file("res://Scenes/VictoryScreen.tscn")
+
+func show_defeat_screen():
+	# Disable all inputs
+	#$"../InPutManager".inputs_disabled = true
+	# Load and show defeat scene
+	# Wait 1 second
+	await wait(1.0)
+	get_tree().change_scene_to_file("res://Scenes/DefeatScreen.tscn")
+			
+# Add to BattleManager.gd
+func restart_game():
+	# Reset health values
+	player_health = STARTING_HEALTH
+	opponent_health = STARTING_HEALTH
+	$"../PlayerHealth".text = str(player_health)
+	$"../OpponentHealth".text = str(opponent_health)
+	
+	# Clear all battlefield arrays
+	player_cards_on_battlefield.clear()
+	opponent_cards_on_battlefield.clear()
+	player_cards_that_attacked_this_turn.clear()
+	
+	# Reset turn state
+	is_opponents_turn = false
+	$"../EndTurnButton".disabled = false
+	$"../EndTurnButton".visible = true
+	
+	# Reset card manager
+	$"../CardManager".played_monster_card_this_turn = false
+	$"../CardManager".selected_monster = null
+	
+	# Clear hands and reset decks
+	$"../PlayerHand".clear_hand()  # You'll need to create this function
+	$"../OpponentHand".clear_hand()  # You'll need to create this function
+	
+	# Reset input manager
+	$"../InPutManager".inputs_disabled = false
+	
+	# Reset decks and redraw starting hands
+	$"../Deck".restart_deck()  # You'll need to create this function
+	$"../OpponentDeck".restart_deck()  # You'll need to create this function
+	
+	# Reset empty card slots
+	empty_monster_card_slots.clear()
+	var slot1 = $"../CardSlots/OpponentCardslot1"
+	var slot2 = $"../CardSlots/OpponentCardslot2"
+	var slot3 = $"../CardSlots/OpponentCardslot3"
+	var slot4 = $"../CardSlots/OpponentCardslot4"
+	if slot1: empty_monster_card_slots.append(slot1)
+	if slot2: empty_monster_card_slots.append(slot2)
+	if slot3: empty_monster_card_slots.append(slot3)
+	if slot4: empty_monster_card_slots.append(slot4)

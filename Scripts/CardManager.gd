@@ -50,8 +50,7 @@ func card_clicked(card):
 		# Don't allow actions during opponent's turn or while attacking
 		if $"../BattleManager".is_opponents_turn:
 			return
-		if $"../BattleManager".player_is_attacking:
-			return
+		
 		
 		# Card on battlefield - check if it can attack
 		if card in $"../BattleManager".player_cards_that_attacked_this_turn:
@@ -122,11 +121,10 @@ func finish_drag():
 		# Add to battlefield only if Monster
 		if card_being_dragged.card_type == "Monster":
 			$"../BattleManager".player_cards_on_battlefield.append(card_being_dragged)
-		else:
-			if card_being_dragged.ability_script:
-				card_being_dragged.ability_script.trigger_ability($"../BattleManager", card_being_dragged,$"../InPutManager")
-			else:
-					print("Magic card played but no ability script found")
+		
+		if card_being_dragged.ability_script:
+			card_being_dragged.ability_script.trigger_ability($"../BattleManager", card_being_dragged,$"../InPutManager", "card_placed")
+
 		
 		card_being_dragged = null
 		return

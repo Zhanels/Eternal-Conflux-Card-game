@@ -8,8 +8,8 @@ const CARDS = {
 		"attack": 3,   # Aanvalskracht van de kaart
 		"health": 3,   # Levenspunten van de kaart
 		"type":"Monster",
-		"Ability": null,
-		"script_path": null
+		"Ability": "Played deal 1 damage",
+		"script_path": "res://Scripts/Ability/Arrow.gd"
 		
 	},
 	
@@ -27,8 +27,8 @@ const CARDS = {
 		"attack": 4,   # Hoogste aanvalskracht
 		"health": 4,   # Redelijke levenspunten
 		"type":"Monster",
-		"Ability": null,
-		"script_path": null
+		"Ability": "can attack twice",
+		"script_path": "res://Scripts/Ability/AttackTwice.gd"
 	},
 	"Tornado": {
 	"attack": null,

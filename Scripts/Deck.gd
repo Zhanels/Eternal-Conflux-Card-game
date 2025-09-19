@@ -59,26 +59,35 @@ func draw_card():
 	new_card.get_node("CardImage").texture = load(card_image_path)
 	
 	new_card.card_type = card_database_reference.CARDS[card_drawn_name]["type"]
-	if new_card.card_type == "Magic":
-	# Load ability script as a separate object, don't replace the card's script
-		var script_path = card_database_reference.CARDS[card_drawn_name]["script_path"]
-		if script_path:
-			var ability_script_class = load(script_path)
-			new_card.ability_script = ability_script_class.new()
-		# Pass reference to battle manager or other needed objects
-			new_card.ability_script.battle_manager = get_parent().get_node("BattleManager")
-		
+	
+	# Check if card has an ability script (regardless of type)
+	var script_path = card_database_reference.CARDS[card_drawn_name]["script_path"]
+	if script_path:
+		var ability_script_class = load(script_path)
+		new_card.ability_script = ability_script_class.new()
+		new_card.ability_script.battle_manager = get_parent().get_node("BattleManager")
+	
+	# Setup card display based on type
 	if new_card.card_type == "Monster":
-		new_card.get_node("Ability").visible = false
-	# Set attack and health values from database
+		# Set attack and health values
 		new_card.health = card_database_reference.CARDS[card_drawn_name]["health"]
 		new_card.attack = card_database_reference.CARDS[card_drawn_name]["attack"]
 		new_card.get_node("Attack").text = str(new_card.attack)
 		new_card.get_node("Health").text = str(new_card.health)
-	else:
+		
+		# Check if monster has ability text
+		var ability_text = card_database_reference.CARDS[card_drawn_name]["Ability"]
+		if ability_text:
+			new_card.get_node("Ability").text = ability_text
+			new_card.get_node("Ability").visible = true
+		else:
+			new_card.get_node("Ability").visible = false
+			
+	else: # Magic cards
 		new_card.get_node("Attack").visible = false
 		new_card.get_node("Health").visible = false
 		new_card.get_node("Ability").text = card_database_reference.CARDS[card_drawn_name]["Ability"]
+		new_card.get_node("Ability").visible = true
 	# Voeg kaart toe aan scene via CardManager
 	$"../CardManager".add_child(new_card)
 	new_card.name = "Card"
@@ -97,3 +106,21 @@ func draw_card():
 	
 func reset_draw():
 	drawn_card_this_turn = false
+	
+	
+func restart_deck():
+	# Reset the deck to original state
+	player_deck = ["Knight", "Archer", "Demon", "Knight", "Tornado"]
+	player_deck.shuffle()
+	drawn_card_this_turn = false
+	
+	# Show deck UI again
+	$Area2D/CollisionShape2D.disabled = false
+	$Sprite2D.visible = true
+	$CardsLeft.visible = true
+	$CardsLeft.text = str(player_deck.size())
+	
+	# Draw starting hand
+	for i in range(STARTING_HAND_SIZE):
+		draw_card()
+		drawn_card_this_turn = false

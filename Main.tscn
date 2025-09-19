@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://7ae56nww7sat"]
+[gd_scene load_steps=14 format=3 uid="uid://7ae56nww7sat"]
 
 [ext_resource type="Script" uid="uid://beubvhe0r1nea" path="res://Scripts/CardManager.gd" id="1_uu6xs"]
 [ext_resource type="Script" uid="uid://b5qrrk4fd0j32" path="res://Scripts/PlayerHand.gd" id="3_cm0pq"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://bevie8wdxuu4d" path="res://Scripts/BattleManager.gd" id="8_03owx"]
 [ext_resource type="Script" uid="uid://biaiv0e6xlh4x" path="res://Scripts/OpponentHand.gd" id="9_wkp8b"]
 [ext_resource type="Texture2D" uid="uid://w1tjiqd7w3b5" path="res://Assets/CardSlot.png" id="11_20pc6"]
+[ext_resource type="Texture2D" uid="uid://du73outi6qdjm" path="res://Assets/background2png.png" id="12_5vvyt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
 size = Vector2(179, 265)
@@ -155,5 +156,11 @@ script = ExtResource("8_03owx")
 
 [node name="CardManager" type="Node2D" parent="."]
 script = ExtResource("1_uu6xs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -8
+position = Vector2(964, 540)
+scale = Vector2(1.32418, 1.32353)
+texture = ExtResource("12_5vvyt")
 
 [connection signal="pressed" from="EndTurnButton" to="BattleManager" method="_on_end_turn_button_pressed"]
